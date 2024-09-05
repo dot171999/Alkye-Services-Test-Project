@@ -11,7 +11,7 @@ enum Tab: String, CaseIterable {
     case articleFeed = "book"
     case bookmark = "bookmark"
     case tv = "play.tv"
-    case notifications = "bell"
+    case starred = "star"
     case user = "person"
 }
 

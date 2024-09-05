@@ -15,36 +15,38 @@ struct TabScreen: View {
     }
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color("Background").ignoresSafeArea()
-                VStack {
-                    TabView(selection: $selectedtTab) {
-                        switch selectedtTab {
-                        case .articleFeed:
-                            HomeScreen()
-                        case .bookmark:
-                            Text(selectedtTab.rawValue)
-                        case .tv:
-                            Text(selectedtTab.rawValue)
-                        case .notifications:
-                            Text(selectedtTab.rawValue)
-                        case .user:
-                            ProfileScreen()
-                        }
+        ZStack {
+            Color("Background").ignoresSafeArea()
+            VStack {
+                TabView(selection: $selectedtTab) {
+                    NavigationStack {
+                        ArticleFeedScreen()
+                            .tag(Tab.articleFeed)
                     }
+                    
+                    ArticlesScreen(isShowing: .bookmarked)
+                        .tag(Tab.bookmark)
+                    
+                    
+                    Text(selectedtTab.rawValue)
+                        .tag(Tab.tv)
+                    
+                    ArticlesScreen(isShowing: .starred)
+                        .tag(Tab.starred)
+                    
+                    ProfileScreen()
+                        .tag(Tab.user)
                 }
-                VStack {
-                    Spacer()
-                    HoveringTabBar(selectedTab: $selectedtTab)
-                        
-                }
-                .padding(.bottom,25)
-                .padding(.horizontal, 20)
             }
-            .ignoresSafeArea(.all, edges: .bottom)
-            .navigationBarBackButtonHidden(true)
+            VStack {
+                Spacer()
+                HoveringTabBar(selectedTab: $selectedtTab)
+                
+            }
+            .padding(.bottom,25)
+            .padding(.horizontal, 20)
         }
+        .ignoresSafeArea(.all, edges: .bottom)
         .navigationBarBackButtonHidden(true)
     }
 }

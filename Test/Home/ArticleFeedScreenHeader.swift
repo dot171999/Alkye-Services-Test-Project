@@ -14,11 +14,9 @@ extension ArticleFeedScreen {
         var body: some View {
             HStack {
             
-                NavigationLink(destination: ProfileScreen()) {
-                    Image("Logo")
-                        .resizable()
-                        .frame(width: 43, height: 43)
-                }
+                Image("Logo")
+                    .resizable()
+                    .frame(width: 43, height: 43)
                 
                 Spacer()
                 

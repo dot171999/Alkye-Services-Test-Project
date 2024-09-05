@@ -12,7 +12,8 @@ struct ArticleFeedScreen: View {
     @State var viewModel = ViewModel()
     
     var body: some View {
-            ZStack (alignment: .bottom) {
+        //NavigationStack {
+            ZStack {
                 BackgroundView()
                 VStack {
                     HeaderView(text: $search)
@@ -49,7 +50,9 @@ struct ArticleFeedScreen: View {
                 }
             }
             .ignoresSafeArea(.all, edges: .bottom)
-    }
+            .navigationBarBackButtonHidden(true)
+        }
+   // }
 }
 
 #Preview {
@@ -71,8 +74,7 @@ struct BackgroundView: View {
 struct AllArticlesButton: View {
     var body: some View {
         NavigationLink {
-            ArticlesScreen()
-            //ArticleDetailView()
+            ArticlesScreen(isShowing: .all)
         } label: {
             Text("View all")
                 .tint(Color.black)

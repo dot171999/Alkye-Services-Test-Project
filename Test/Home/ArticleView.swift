@@ -12,6 +12,8 @@ struct ArticleView: View {
     
     var frameWidth: CGFloat
     
+    @State var isStarred = false
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             
@@ -68,14 +70,38 @@ struct ArticleView: View {
                         .resizable()
                         .frame(width: 33, height: 33)
                     Spacer()
-                    Image("StarButton")
+                
+                    Image(systemName: "star")
                         .resizable()
+                        .padding(8)
                         .frame(width: 33, height: 33)
+                        .background(isStarred ? .yellow : .black)
+                        .clipShape(.rect(cornerRadius: 15))
+                        .foregroundStyle(isStarred ? .black : .white)
+                        .onTapGesture {
+                            if let user = DataStorage.shared.currentUser {
+                                
+                                if !self.isStarred {
+                                    
+                                    user.starredArticleIds.append(self.article.Id)
+                                    self.isStarred = true
+                                } else {
+                                    user.starredArticleIds.removeAll(where: {$0 == self.article.Id})
+                                    self.isStarred = false
+                                }
+                            }
+                        }
+                    
                 }
                 .padding(25)
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+        })
+        .onAppear(perform: {
+            if let user = DataStorage.shared.currentUser, user.starredArticleIds.contains(self.article.Id) {
+                self.isStarred = true
+            }
         })
     }
 }

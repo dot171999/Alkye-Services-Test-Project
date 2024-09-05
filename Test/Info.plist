@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Strawford-Black.ttf</string>
+		<string>Strawford-Bold.ttf</string>
+		<string>Strawford-ExtraLight.ttf</string>
+		<string>Strawford-Light.ttf</string>
+		<string>Strawford-Medium.ttf</string>
+		<string>Strawford-Regular.ttf</string>
+		<string>Strawford-Thin.ttf</string>
+		<string>ScillaNarrow-RegularItalic.otf</string>
+		<string>ScillaNarrow-Regular.otf</string>
+		<string>Scilla-RegularItalic.otf</string>
+		<string>Scilla-Regular.otf</string>
+		<string>Northwell.ttf</string>
+		<string>NorthwellAlt.ttf</string>
+	</array>
+</dict>
+</plist>

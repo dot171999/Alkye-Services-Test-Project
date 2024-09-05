@@ -8,8 +8,72 @@
 import SwiftUI
 
 struct ProfileScreen: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    let dataStorage = DataStorage.shared
+    
+    @State var userLoggedOut = false
+    
+    // Data model for the list sections
+    struct SectionData {
+        let title: String
+        let items: [String]
+    }
+    
+    let sections = [
+            SectionData(title: "Settings", items: ["Profile", "Privacy", "Notifications"]),
+            SectionData(title: "Account", items: ["Subscription", "Billing", "Logout"])
+        ]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            ZStack {
+                Color("Background")
+                    .ignoresSafeArea()
+                VStack(alignment: .center) {
+                    Spacer()
+                    Image("SamplePhoto5")
+                        .resizable()
+                        .frame(width: 150,height: 150)
+                        .clipShape(.rect(cornerRadius: 100))
+                        .padding(.top)
+                    Spacer()
+                    
+                    
+                    Text(dataStorage.currentUser?.name ?? "No name")
+                        .padding()
+                    
+                    List {
+                        ForEach(sections, id: \.title) { section in
+                            Section(header: Text(section.title)) {
+                                ForEach(section.items, id: \.self) { item in
+                                    if item == "Logout" {
+                                        Button(action: {
+                                            self.userLoggedOut = true
+                                            self.dataStorage.logoutUser()
+                                            
+                                        }) {
+                                            Text(item)
+                                                .foregroundColor(.red) // Make logout stand out
+                                        }
+                                    } else {
+                                        Text(item)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .padding()
+                    .scrollContentBackground(.hidden)
+                    
+                    Spacer()
+                }
+            }
+            .fullScreenCover(isPresented: $userLoggedOut, content: {
+                WelcomeScreen()
+            })
+            .navigationBarBackButtonHidden(true)
+        }
     }
 }
 

@@ -1,18 +1,20 @@
-//
-//  HeaderView.swift
-//  Test
-//
-//  Created by Aryan Sharma on 03/09/24.
-//
+import SwiftUI
 
 import SwiftUI
 
-struct HeaderView: View {
+
+
+import SwiftUI
+
+struct ContentView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("")
     }
 }
 
+
+
+
 #Preview {
-    HeaderView()
+    ContentView()
 }
