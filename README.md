@@ -1,5 +1,13 @@
-<img src = https://github.com/user-attachments/assets/1361344b-d505-4b84-b1d5-1c03a48f5070 width="220">
+1. Added SwiftData support to store users locally.
+2. The whole project is based on SwiftUI.
+3. Reading JSON data from local file.
+4. Bookmark and Starred working.
+5. Floating Custom TabView
+6. Swipe to open the Recent Articles
 
+Bugs: Navigation, will be using NavigationPath in future updates.
+   
+<img src = https://github.com/user-attachments/assets/1361344b-d505-4b84-b1d5-1c03a48f5070 width="220">
 <img src="https://github.com/user-attachments/assets/10c663e4-f69f-45ab-91cc-490940caf08d" width="220" alt="Simulator Screenshot - iPhone 15 Pro - 2024-09-05 at 10 16 44">
 <img src="https://github.com/user-attachments/assets/0d77eced-a917-4978-87d3-86212f99bad1" width="220" alt="Simulator Screenshot - iPhone 15 Pro - 2024-09-05 at 10 16 49">
 <img src="https://github.com/user-attachments/assets/dee0daba-745d-401f-ad10-18b34f86965b" width="220" alt="Simulator Screenshot - iPhone 15 Pro - 2024-09-05 at 10 18 08">
