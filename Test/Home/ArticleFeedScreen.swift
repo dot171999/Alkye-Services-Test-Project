@@ -9,8 +9,12 @@ import SwiftUI
 
 struct ArticleFeedScreen: View {
     @State private var search = ""
-    @State var viewModel = ViewModel()
+    @Binding var articles: [Article]
     
+    init(show articles: Binding<[Article]>) {
+        self._articles = articles
+    }
+  
     var body: some View {
         //NavigationStack {
             ZStack {
@@ -22,7 +26,7 @@ struct ArticleFeedScreen: View {
                             VStack {
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     LazyHStack (spacing: 20) {
-                                        ForEach(viewModel.articles) { article in
+                                        ForEach(articles) { article in
                                             NavigationLink {
                                                 ArticleScreen(article: article)
                                             } label: {
@@ -36,7 +40,7 @@ struct ArticleFeedScreen: View {
                                     .padding()
                                 }
                                 
-                                RecentArticlesView(articles: viewModel.articles)
+                                RecentArticlesView(articles: $articles)
                             }
                             .background(Color("Background"))
                             
@@ -55,9 +59,9 @@ struct ArticleFeedScreen: View {
    // }
 }
 
-#Preview {
-    ArticleFeedScreen()
-}
+//#Preview {
+//    ArticleFeedScreen(articles: <#T##Binding<[Article]>#> )
+//}
 
 struct BackgroundView: View {
     var body: some View {
@@ -156,7 +160,7 @@ struct SocialConnectView: View {
 
 struct RecentArticlesView: View {
 
-    @State var articles: [Article]
+    @Binding var articles: [Article]
     
     var body: some View {
         Text("Recent Articles")

@@ -21,18 +21,18 @@ extension ArticlesScreen {
         
         func filterArticles(for screen: Articles) -> [Article] {
             var filteredArticles: [Article] = []
-            if let user = DataStorage.shared.currentUser, !user.bookmarkedArticleIds.isEmpty {
+            if let user = UserManager.shared.currentUser, !user.bookmarkedArticleIds.isEmpty {
                 
                 switch screen {
                 case .bookmarked:
                     
                     filteredArticles = articles.filter({ article in
-                        user.bookmarkedArticleIds.contains(article.Id)
+                        user.bookmarkedArticleIds.contains(article.id)
                     })
                     
                 case .starred:
                     filteredArticles = articles.filter({ article in
-                        user.starredArticleIds.contains(article.Id)
+                        user.starredArticleIds.contains(article.id)
                     })
                     
                 case .all:

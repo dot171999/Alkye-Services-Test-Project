@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ArticleScreen: View {
-    @State private var viewModel = ViewModel()
     @State private var isBookmarked = false
     
     var article: Article
@@ -87,14 +86,13 @@ struct ArticleScreen: View {
                                         .clipShape(.rect(cornerRadius: 23))
                                         .foregroundStyle(isBookmarked ? .black : .white)
                                         .onTapGesture {
-                                            if let user = DataStorage.shared.currentUser {
-                                                
+                                            if let user = UserManager.shared.currentUser {
                                                 if !self.isBookmarked {
                                                     
-                                                    user.bookmarkedArticleIds.append(self.article.Id)
+                                                    user.bookmarkedArticleIds.append(self.article.id)
                                                     self.isBookmarked = true
                                                 } else {
-                                                    user.bookmarkedArticleIds.removeAll(where: {$0 == self.article.Id})
+                                                    user.bookmarkedArticleIds.removeAll(where: {$0 == self.article.id})
                                                     self.isBookmarked = false
                                                 }
                                             }
@@ -163,7 +161,7 @@ struct ArticleScreen: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear(perform: {
-            if let user = DataStorage.shared.currentUser, user.bookmarkedArticleIds.contains(self.article.Id) {
+            if let user = UserManager.shared.currentUser, user.bookmarkedArticleIds.contains(self.article.id) {
                 self.isBookmarked = true
             }
         })

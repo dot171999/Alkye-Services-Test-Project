@@ -6,13 +6,15 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct TestApp: App {
+    
     var body: some Scene {
         WindowGroup {
             SplashScreen()
-            
         }
+        .modelContainer(for: [User.self, CurrentUser.self])
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct WelcomeScreen: View {
     var body: some View {
         NavigationStack {
-            ZStack{
+            ZStack {
                 Color("Background")
                     .ignoresSafeArea()
                 VStack {
@@ -40,6 +40,7 @@ struct WelcomeScreen: View {
 
 #Preview {
     WelcomeScreen()
+        .modelContainer(DataController.previewContainer)
 }
 
 extension WelcomeScreen {

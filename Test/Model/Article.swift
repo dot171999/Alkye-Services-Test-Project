@@ -10,8 +10,7 @@ import SwiftUI
 
 
 struct Article: Codable, Identifiable {
-    let id = UUID() // This is to conform to Identifiable protocol
-    var Id: Int = 0
+    var id: Int = 0
     var type: String = "Technology"
     var category: String = "News"
     var date: String = "26 Feb 2023"
@@ -22,7 +21,7 @@ struct Article: Codable, Identifiable {
     var parts: [String: String]  = [:]
 
     enum CodingKeys: String, CodingKey {
-        case Id = "Id"
+        case id = "Id"
         case type = "Type"
         case category = "Category"
         case date = "Date"
@@ -32,4 +31,5 @@ struct Article: Codable, Identifiable {
         case similarTopics = "Similar Topics"
         case parts = "Parts"
     }
+    
 }

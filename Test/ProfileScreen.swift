@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ProfileScreen: View {
     @Environment(\.dismiss) private var dismiss
-    
-    let dataStorage = DataStorage.shared
+    @Environment(\.modelContext) private var modelContext
+    let dataStorage = UserManager.shared
     
     @State var userLoggedOut = false
     
@@ -50,8 +51,10 @@ struct ProfileScreen: View {
                                     if item == "Logout" {
                                         Button(action: {
                                             self.userLoggedOut = true
+                                            if let user = self.dataStorage.currentUser {
+                                                self.modelContext.delete(user)
+                                            }
                                             self.dataStorage.logoutUser()
-                                            
                                         }) {
                                             Text(item)
                                                 .foregroundColor(.red) // Make logout stand out
@@ -70,6 +73,7 @@ struct ProfileScreen: View {
                 }
             }
             .fullScreenCover(isPresented: $userLoggedOut, content: {
+                
                 WelcomeScreen()
             })
             .navigationBarBackButtonHidden(true)

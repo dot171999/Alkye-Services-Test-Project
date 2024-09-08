@@ -6,13 +6,21 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SplashScreen: View {
-    @State private var isActive = false
+    
+    // Get CurrentUser instance from local db if present.
+    @Query private var currentUsers: [CurrentUser]
+    
+    // Shared helper class to manage user data.
+    let userManager = UserManager.shared
+    
     @State private var size = 0.8
     @State private var opacity = 0.5
     
-    private let dataStorage = DataStorage.shared
+    @State private var splashAnimationFinished = false
+    @State private var userSuccessfullyLoggedIn = false
     
     var body: some View {
         ZStack {
@@ -31,13 +39,20 @@ struct SplashScreen: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .onAppear {
+                if userManager.check(forAny: currentUsers) {
+                    // Validate user credentials from API. No API, using SwiftData right now.
+                    self.userSuccessfullyLoggedIn.toggle()
+                   
+                } else if userManager.isFirstLaunch() {
+                    // Show onboarding
+                }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.isActive = true
+                    self.splashAnimationFinished.toggle()
                 }
             }
             .overlay {
-                if isActive {
-                    if dataStorage.isUserLoggedIn() {
+                if splashAnimationFinished {
+                    if userSuccessfullyLoggedIn {
                         TabScreen()
                     } else {
                         WelcomeScreen()
@@ -50,4 +65,5 @@ struct SplashScreen: View {
 
 #Preview {
     SplashScreen()
+        .modelContainer(DataController.previewContainer)
 }

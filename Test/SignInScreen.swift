@@ -6,16 +6,21 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SignInScreen: View {
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
+    
     @State private var username: String = ""
     @State private var password: String = ""
     
     @State private var navigateToNewView = false
     @State private var wrongDetailsEntered = false
-    private let dataStorage = DataStorage.shared
+    
+    private var userManager = UserManager.shared
+    @Query private var users: [User]
     
     var body: some View {
         ZStack {
@@ -59,9 +64,9 @@ struct SignInScreen: View {
                 Spacer()
                 
                 Button(action: {
-                    if self.dataStorage.isUserPresent(username: self.username) && self.dataStorage.isUserPassCorrect(username: self.username, pass: self.password) {
-                        self.dataStorage.setUserLoggedIn(username: self.username)
-                
+                    if let user = users.first(where: {$0.username == self.username && $0.password == self.password}) {
+                        let currentUser = userManager.setCurrentUser(to: user)
+                        self.modelContext.insert(currentUser)
                         navigateToNewView = true
                     } else {
                         self.username = ""
@@ -94,4 +99,5 @@ struct SignInScreen: View {
 
 #Preview {
     SignInScreen()
+        .modelContainer(DataController.previewContainer)
 }

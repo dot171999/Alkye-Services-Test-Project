@@ -79,14 +79,14 @@ struct ArticleView: View {
                         .clipShape(.rect(cornerRadius: 15))
                         .foregroundStyle(isStarred ? .black : .white)
                         .onTapGesture {
-                            if let user = DataStorage.shared.currentUser {
+                            if let user = UserManager.shared.currentUser {
                                 
                                 if !self.isStarred {
                                     
-                                    user.starredArticleIds.append(self.article.Id)
+                                    user.starredArticleIds.append(self.article.id)
                                     self.isStarred = true
                                 } else {
-                                    user.starredArticleIds.removeAll(where: {$0 == self.article.Id})
+                                    user.starredArticleIds.removeAll(where: {$0 == self.article.id})
                                     self.isStarred = false
                                 }
                             }
@@ -99,7 +99,7 @@ struct ArticleView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         })
         .onAppear(perform: {
-            if let user = DataStorage.shared.currentUser, user.starredArticleIds.contains(self.article.Id) {
+            if let user = UserManager.shared.currentUser, user.starredArticleIds.contains(self.article.id) {
                 self.isStarred = true
             }
         })

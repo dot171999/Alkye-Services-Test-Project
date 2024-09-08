@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct TabScreen: View {
+    
+    @State private var showError = false
+    @State private var errorMessage = ""
+    
+    @State private var articles: [Article] = []
     @State private var selectedtTab: Tab = .articleFeed
     
     init() {
@@ -20,7 +25,7 @@ struct TabScreen: View {
             VStack {
                 TabView(selection: $selectedtTab) {
                     NavigationStack {
-                        ArticleFeedScreen()
+                        ArticleFeedScreen(show: $articles)
                             .tag(Tab.articleFeed)
                     }
                     
@@ -48,9 +53,24 @@ struct TabScreen: View {
         }
         .ignoresSafeArea(.all, edges: .bottom)
         .navigationBarBackButtonHidden(true)
+        .task {
+        NSLog("hello")
+            let (fetchedArticles, fetchedError) =   await NetworkManager.shared.getArticles()
+            
+            if let articles = fetchedArticles {
+                self.articles = articles
+            } else if let error = fetchedError {
+                self.errorMessage = error
+                self.showError.toggle()
+            }
+        }
+        .alert(errorMessage, isPresented: $showError) {
+            Button("OK", role: .cancel) {}
+        }
     }
 }
 
 #Preview {
     TabScreen()
+        .modelContainer(DataController.previewContainer)
 }

@@ -6,21 +6,24 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SignUpScreen: View {
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
     
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var name: String = ""
     
     @State private var navigateToNewView = false
-    @State private var usernameTaken = false
     
     @State private var errorMessage = "Please provide your details."
     
-    private let dataStorage = DataStorage.shared
+    private let userStorage = UserManager.shared
+    
+    @Query private var users: [User]
     
     var body: some View {
         ZStack {
@@ -76,14 +79,17 @@ struct SignUpScreen: View {
                 Spacer()
                 
                 Button(action: {
-                    if self.dataStorage.isUserPresent(username: self.username) {
+                    if self.users.contains(where: {$0.username == self.username}) {
                         errorMessage = "Username taken"
                         self.username = ""
                     } else if username == "" || password == "" || name == "" {
                         errorMessage = "Fill All fields."
                     } else {
-                        _ = self.dataStorage.createUser(name: name, username: username, password: password)
-                        self.dataStorage.setUserLoggedIn(username: self.username)
+                        let user = User(name: name, username: username, password: password)
+                        let currentUser = CurrentUser(user: user)
+                        self.context.insert(user)
+                        self.context.insert(currentUser)
+                        self.userStorage.setCurrentUser(equalTo: currentUser)
                         self.navigateToNewView = true
                     }
                 }, label: {
@@ -95,7 +101,6 @@ struct SignUpScreen: View {
                         .cornerRadius(15)
                        
                 })
-                .animation(.spring, value: usernameTaken)
                 Spacer()
             }
             .frame(maxWidth: .infinity, alignment: .center)
@@ -112,4 +117,5 @@ struct SignUpScreen: View {
 
 #Preview {
     SignUpScreen()
+        .modelContainer(DataController.previewContainer)
 }
