@@ -1,4 +1,4 @@
-4 days work.
+8 hours of work.
 1. Added **SwiftData** support to store users locally.
 2. The whole project is based on **SwiftUI**.
 3. Reading JSON data from local file.
